@@ -1,0 +1,29 @@
+{
+    "name": "common",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "./dist/index.js",
+    "exports": {
+        "./FileManager.js": "./dist/FileManager.js",
+        "./DirectoryManager.js": "./dist/DirectoryManager.js",
+        "./types.js": "./dist/types.js"
+    },
+    "scripts": {
+        "build": "npx tsc -b",
+        "format:check": "prettier --check .",
+        "format:write": "prettier --write .",
+        "lint:check": "eslint .",
+        "lint:fix": "eslint --fix ."
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.36.0",
+        "@types/node": "^24.5.2",
+        "eslint": "^9.36.0",
+        "eslint-config-prettier": "^10.1.8",
+        "globals": "^16.4.0",
+        "jiti": "^2.5.1",
+        "prettier": "^3.6.2",
+        "typescript": "^5.9.2",
+        "typescript-eslint": "^8.44.0"
+    }
+}
