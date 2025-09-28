@@ -2,27 +2,30 @@ import path from 'node:path';
 import fsPromises from 'node:fs/promises';
 import fs from 'node:fs';
 import DirectoryManager from './DirectoryManager.js';
-import * as Messages from "./Messages.js";
+import * as Messages from './Messages.js';
 class FileManager {
     static async createFile(filePath: string): Promise<boolean> {
         const dirName = path.dirname(filePath);
         await DirectoryManager.checkIsValidDirectory(dirName);
-        
+
         try {
             await this.checkIsFileExists(filePath);
-            return new Promise<boolean>((_,reject)=>{
-                reject(Messages.FILE+Messages.SPACE+Messages.ALREADY_EXIST);
-            })
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (_error) {
-            return new Promise<boolean>((resolve,reject)=>{
-                fsPromises.writeFile(filePath,"").then(()=>{
-                    resolve(true);
-                }).catch((reason)=>{
-                    reject(reason);
-                })
+            return new Promise<boolean>((_, reject) => {
+                reject(Messages.FILE + Messages.SPACE + Messages.ALREADY_EXIST);
             });
-        }  
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_error) {
+            return new Promise<boolean>((resolve, reject) => {
+                fsPromises
+                    .writeFile(filePath, '')
+                    .then(() => {
+                        resolve(true);
+                    })
+                    .catch((reason) => {
+                        reject(reason);
+                    });
+            });
+        }
     }
 
     static async readFile(
@@ -70,7 +73,7 @@ class FileManager {
     ): Promise<boolean> {
         await this.checkIsFileExists(filePath);
         const appendPromise = new Promise<boolean>((resolve, reject) => {
-            fs.appendFile(filePath, fileContent,{encoding}, (err) => {
+            fs.appendFile(filePath, fileContent, { encoding }, (err) => {
                 if (err) {
                     console.log(err);
                     reject(err.message);
@@ -96,11 +99,14 @@ class FileManager {
     }
 
     static checkIsFileExists(filePath: string): Promise<boolean> {
-        return new Promise<boolean>((resolve,reject)=>{
-                fs.exists(filePath,(exists)=>{
-                    if(exists) resolve(true);
-                    else reject(Messages.FILE+Messages.SPACE+Messages.DOES_NOT_EXIST);
-                })
+        return new Promise<boolean>((resolve, reject) => {
+            fs.exists(filePath, (exists) => {
+                if (exists) resolve(true);
+                else
+                    reject(
+                        Messages.FILE + Messages.SPACE + Messages.DOES_NOT_EXIST
+                    );
+            });
         });
     }
 }

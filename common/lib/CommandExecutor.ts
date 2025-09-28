@@ -1,5 +1,5 @@
 import ChildProcess from 'node:child_process';
-import * as Messages from "./Messages.js"
+import * as Messages from './Messages.js';
 class CommandExecutor {
     static async execute(command: string): Promise<string> {
         await this.checkIsSafeCommand(command);
@@ -18,12 +18,12 @@ class CommandExecutor {
     }
     static async checkIsSafeCommand(command: string): Promise<boolean> {
         const unsafeCommands = ['rm -rf / --no-preserve-root'];
-        return new Promise<boolean>((resolve,reject)=>{
+        return new Promise<boolean>((resolve, reject) => {
             if (unsafeCommands.includes(command)) {
-                reject(Messages.INVALID+Messages.SPACE+Messages.COMMAND);
+                reject(Messages.INVALID + Messages.SPACE + Messages.COMMAND);
             }
             resolve(true);
-        })
+        });
     }
 }
 export default CommandExecutor;
