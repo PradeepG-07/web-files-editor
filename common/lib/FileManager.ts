@@ -98,7 +98,23 @@ class FileManager {
         return deletePromise;
     }
 
-    static checkIsFileExists(filePath: string): Promise<boolean> {
+    static async checkIsValidFilePath(filePath: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            const extName = path.extname(filePath);
+            if (extName.length <= 0)
+                reject(
+                    Messages.INVALID +
+                        Messages.SPACE +
+                        Messages.DIRECTORY +
+                        Messages.SPACE +
+                        Messages.PATH
+                );
+            resolve(true);
+        });
+    }
+
+    static async checkIsFileExists(filePath: string): Promise<boolean> {
+        await this.checkIsValidFilePath(filePath);
         return new Promise<boolean>((resolve, reject) => {
             fs.exists(filePath, (exists) => {
                 if (exists) resolve(true);
