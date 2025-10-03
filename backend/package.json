@@ -17,7 +17,8 @@
     "description": "",
     "dependencies": {
         "common": "file:../common",
-        "express": "^5.1.0"
+        "express": "^5.1.0",
+        "zod": "^4.1.11"
     },
     "devDependencies": {
         "@eslint/js": "^9.36.0",
