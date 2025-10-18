@@ -12,7 +12,7 @@ export const getDirectoryTree = asyncHandler(
         if (error) {
             return checkAndThrowZodErrors(error);
         }
-        const directoryPath = data.path;
+        const directoryPath = data.path;        
         const treeView = await DirectoryManager.getDirectoryTree(directoryPath);
         return res.json(
             new ApiRespone(

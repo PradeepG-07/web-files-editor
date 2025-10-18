@@ -69,7 +69,9 @@ class DirectoryManager {
 
     static async checkIsValidDirectory(dirPath: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            const extName = path.extname(dirPath);
+            const parts = dirPath.split("/");
+            const lastPart = parts[parts.length - 1] ?? "";
+            const extName = path.extname(lastPart);
             if (extName.length > 0)
                 reject(
                     Messages.INVALID +
