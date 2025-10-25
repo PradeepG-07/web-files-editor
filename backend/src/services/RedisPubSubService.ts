@@ -1,6 +1,7 @@
 import RedisClient from "../config/RedisClient.js";
 import cleanedEnv from "../utils/cleanedEnv.js";
 import { RedisClientMode } from "../utils/types.js";
+import SseManager from "./SseManager.js";
 
 export default class RedisPubSubService{
     private static connString:string = cleanedEnv.REDIS_PUBSUB_URI;
@@ -43,6 +44,6 @@ export default class RedisPubSubService{
         return true;
     }
     static handleUpdates(message: string,channel: string){
-        console.log(`Channel ${channel}, Message: ${message}`);
+        SseManager.pushUpdatesToConnections(message,channel);
     }
 }
