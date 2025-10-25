@@ -19,6 +19,7 @@
         "common": "file:../common",
         "dotenv": "^17.2.3",
         "express": "^5.1.0",
+        "redis": "^5.9.0",
         "zod": "^4.1.11"
     },
     "devDependencies": {
