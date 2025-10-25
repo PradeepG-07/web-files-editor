@@ -22,3 +22,10 @@ export const DirectorySchema = z.object({
         }
     ).transform((data)=> data.startsWith("~") ? data.replace("~",`/home/${process.env.USERNAME}`) : data),
 });
+export const EnvSchema = z.object({
+    PASSWORD: z.string({message: "PASSWORD is required."}),
+    USERNAME: z.string({message: "USERNAME is required."}),
+    REDIS_URI: z.string({message: "REDIS_URI is required."}),
+    REDIS_PUBSUB_URI: z.string({message: "REDIS_URI is required."}),
+    SSE_URI: z.string({message: "SSE_URI is required."}),
+});
