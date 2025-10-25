@@ -15,6 +15,8 @@ class DirectoryManager {
                     const result: Directory = {
                         name: file,
                         isDirectory: stats.isDirectory(),
+                        size: stats.size,
+                        absolutePath: filePath
                     };
                     return result;
                 });
