@@ -16,7 +16,7 @@ class DirectoryManager {
                         name: file,
                         isDirectory: stats.isDirectory(),
                         size: stats.size,
-                        absolutePath: filePath
+                        absolutePath: filePath,
                     };
                     return result;
                 });
@@ -71,8 +71,8 @@ class DirectoryManager {
 
     static async checkIsValidDirectory(dirPath: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            const parts = dirPath.split("/");
-            const lastPart = parts[parts.length - 1] ?? "";
+            const parts = dirPath.split('/');
+            const lastPart = parts[parts.length - 1] ?? '';
             const extName = path.extname(lastPart);
             if (extName.length > 0)
                 reject(

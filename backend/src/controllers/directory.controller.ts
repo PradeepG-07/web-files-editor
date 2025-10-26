@@ -14,7 +14,7 @@ export const getDirectoryTree = asyncHandler(
         if (error) {
             return checkAndThrowZodErrors(error);
         }
-        const directoryPath = data.path;        
+        const directoryPath = data.path;
         const treeView = await DirectoryManager.getDirectoryTree(directoryPath);
         return res.json(
             new ApiRespone(
@@ -34,10 +34,15 @@ export const createDirectory = asyncHandler(
             return checkAndThrowZodErrors(error);
         }
         const directoryPath = data.path;
-        const parentDirectoryPath = await DirectoryManager.getParentDirectory(directoryPath);
+        const parentDirectoryPath =
+            await DirectoryManager.getParentDirectory(directoryPath);
         await DirectoryManager.createDirectory(directoryPath);
-        await RedisPubSubService.publishToChannel(parentDirectoryPath,Operations.DIRECTORY_CREATE,directoryPath);
-        
+        await RedisPubSubService.publishToChannel(
+            parentDirectoryPath,
+            Operations.DIRECTORY_CREATE,
+            directoryPath
+        );
+
         return res.json(
             new ApiRespone(
                 200,
@@ -56,9 +61,14 @@ export const deleteDirectory = asyncHandler(
             return checkAndThrowZodErrors(error);
         }
         const directoryPath = data.path;
-        const parentDirectoryPath = await DirectoryManager.getParentDirectory(directoryPath);
+        const parentDirectoryPath =
+            await DirectoryManager.getParentDirectory(directoryPath);
         await DirectoryManager.deleteDirectory(directoryPath);
-        await RedisPubSubService.publishToChannel(parentDirectoryPath,Operations.DIRECTORY_DELETE,directoryPath);
+        await RedisPubSubService.publishToChannel(
+            parentDirectoryPath,
+            Operations.DIRECTORY_DELETE,
+            directoryPath
+        );
         return res.json(
             new ApiRespone(
                 200,

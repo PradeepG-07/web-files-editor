@@ -29,7 +29,11 @@ export const createFile = asyncHandler(async (req: Request, res: Response) => {
     const filePath = data.path;
     const directoryPath = await FileManager.getParentDirectory(filePath);
     await FileManager.createFile(filePath);
-    await RedisPubSubService.publishToChannel(directoryPath,Operations.FILE_CREATE,filePath);
+    await RedisPubSubService.publishToChannel(
+        directoryPath,
+        Operations.FILE_CREATE,
+        filePath
+    );
     return res.json(
         new ApiRespone(200, filePath, 'File created successfully.')
     );
@@ -45,7 +49,11 @@ export const writeToFile = asyncHandler(async (req: Request, res: Response) => {
     const filePath = data.path;
     const fileContent = data.content;
     await FileManager.writeToFile(filePath, fileContent);
-    await RedisPubSubService.publishToChannel(filePath,Operations.FILE_EDIT,filePath);
+    await RedisPubSubService.publishToChannel(
+        filePath,
+        Operations.FILE_EDIT,
+        filePath
+    );
     return res.json(
         new ApiRespone(200, fileContent, 'Written to file successfully.')
     );
@@ -62,7 +70,11 @@ export const appendToFile = asyncHandler(
         const filePath = data.path;
         const fileContent = data.content;
         await FileManager.appendToFile(filePath, fileContent);
-        await RedisPubSubService.publishToChannel(filePath,Operations.FILE_EDIT,filePath);
+        await RedisPubSubService.publishToChannel(
+            filePath,
+            Operations.FILE_EDIT,
+            filePath
+        );
         return res.json(
             new ApiRespone(200, fileContent, 'Appended to file successfully.')
         );
@@ -78,8 +90,16 @@ export const deleteFile = asyncHandler(async (req: Request, res: Response) => {
     const filePath = data.path;
     const directoryPath = await FileManager.getParentDirectory(filePath);
     await FileManager.deleteFile(filePath);
-    await RedisPubSubService.publishToChannel(filePath,Operations.FILE_DELETE,filePath);
-    await RedisPubSubService.publishToChannel(directoryPath,Operations.FILE_DELETE,filePath);
+    await RedisPubSubService.publishToChannel(
+        filePath,
+        Operations.FILE_DELETE,
+        filePath
+    );
+    await RedisPubSubService.publishToChannel(
+        directoryPath,
+        Operations.FILE_DELETE,
+        filePath
+    );
     return res.json(
         new ApiRespone(200, filePath, 'Deleted file successfully.')
     );

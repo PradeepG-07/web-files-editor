@@ -126,7 +126,7 @@ class FileManager {
         });
     }
 
-    static async getParentDirectory(filePath: string): Promise<string>{
+    static async getParentDirectory(filePath: string): Promise<string> {
         await this.checkIsValidFilePath(filePath);
         return path.dirname(filePath);
     }
