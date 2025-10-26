@@ -3,7 +3,7 @@ import { Response } from "express";
 import RedisManager from "./RedisManager.js";
 import cleanedEnv from "../utils/cleanedEnv.js";
 import RedisPubSubService from "./RedisPubSubService.js";
-import { RedisPrefixes } from "../utils/types.js";
+import { Operation, RedisPrefixes } from "../utils/types.js";
 
 export default class SseManager{
     private static connections: Map<string,Response> = new Map<string,Response>;
@@ -39,16 +39,16 @@ export default class SseManager{
     }
     static async pushUpdatesToConnections(message: string,subscriptionPath:string){
         const subscribedClientIds = await RedisManager.getEntry(RedisPrefixes.SERVER_SUBSCRIPTIONS,subscriptionPath) as Array<string>;
-        const formattedMessage = RedisPubSubService.formatSubscribedMessage(message);
+        const {event, data} = RedisPubSubService.formatSubscribedMessage(message);
         subscribedClientIds.forEach(clientId=>{
             if(this.connections.has(clientId)){
                 const clientConnection = this.connections.get(clientId)!;
-                this.sendMessageToConnection(clientConnection,formattedMessage);
+                this.sendMessageToConnection(clientConnection,event,data);
             }
         })
     }
-    static async sendMessageToConnection(connection: Response,message: string){
-        connection.write(`data: ${message}\n\n`);
+    static async sendMessageToConnection(connection: Response,event: Operation, data: string){
+        connection.write(`event: ${event}\ndata: ${data}\n\n`);
     }
     static async closeConnection(clientId: string){
         const subscribedPath = await RedisManager.getEntry(RedisPrefixes.REGISTERED_SUBSCRIPTIONS,clientId) as string;

@@ -1,27 +1,33 @@
 import RedisClient from "../config/RedisClient.js";
 import cleanedEnv from "../utils/cleanedEnv.js";
-import { RedisClientMode } from "../utils/types.js";
+import { Operation, RedisClientMode } from "../utils/types.js";
 import SseManager from "./SseManager.js";
 
 export default class RedisPubSubService{
     private static connString:string = cleanedEnv.REDIS_PUBSUB_URI;
     private static subscribedChannels = new Map<string,number>;
 
-    static formatPublishMessage(message: string){
-        return message;
+    static formatPublishMessage(event: Operation,data: string){
+        return `event: ${event} ${data}`;
     }
     static formatSubscribedMessage(message: string){
-        return message;
+        const parts = message.replace('event: ', '').split(' ');
+        const event = parts[0];
+        const data = parts.slice(1).join(' '); 
+        return {
+            event: event as Operation,
+            data
+        }
     }
-    static async publishToChannel(channel: string,message: string){
-        const formattedMessage = this.formatPublishMessage(message);
+    static async publishToChannel(channel: string,event: Operation, data: string){
+        const formattedMessage = this.formatPublishMessage(event,data);
         const client = await RedisClient.getClient(this.connString);
         await client.publish(channel,formattedMessage);
     }
     static async subscribeToChannel(channel: string){
         if(!this.subscribedChannels.has(channel)){
             const client = await RedisClient.getClient(this.connString,RedisClientMode.SUBSCRIBE);
-            await client.subscribe(channel,this.handleUpdates);
+            await client.subscribe(channel,this.updatesListener);
         }
         const numberOfConnectionsSubscribed = this.subscribedChannels.get(channel) ?? 0;
         this.subscribedChannels.set(channel,numberOfConnectionsSubscribed + 1);
@@ -43,7 +49,7 @@ export default class RedisPubSubService{
         
         return true;
     }
-    static handleUpdates(message: string,channel: string){
+    static updatesListener(message: string,channel: string){
         SseManager.pushUpdatesToConnections(message,channel);
     }
 }
