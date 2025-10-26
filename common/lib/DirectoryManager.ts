@@ -103,5 +103,10 @@ class DirectoryManager {
             resolve(true);
         });
     }
+
+    static async getParentDirectory(dirPath: string): Promise<string> {
+        await this.checkIsValidDirectory(dirPath);
+        return path.dirname(dirPath);
+    }
 }
 export default DirectoryManager;
