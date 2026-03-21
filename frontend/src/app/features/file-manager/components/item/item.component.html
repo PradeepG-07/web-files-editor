@@ -1,0 +1,22 @@
+<div class="card cursor-pointer relative rounded text-vs-white border border-vs-black-2 bg-vs-black-2 px-2" (contextmenu)="handleRightClick($event)" (click)="handleClick($event)">
+    <svg *ngIf="item.isDirectory; else fileIcon" version="1.1" width="80px" height="80px" xmlns="http://www.w3.org/2000/svg"
+        xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" viewBox="0 0 24 24">
+        <!-- Adjusted paths (Y values shifted up by -1028.4) -->
+        <path
+            d="m12 6c0 1.1-0.895 2-2 2h-5-3c-1.1046 0-2 0.9-2 2v8 3c0 1.1 0.89543 2 2 2h20c1.105 0 2-0.9 2-2v-3-10c0-1.1-0.895-2-2-2h-10z"
+            fill="#2980b9" />
+        <path
+            d="m2 2c-1.1046 0-2 0.8954-2 2v5h10v1h14v-5c0-1.1046-0.895-2-2-2h-10.281c-0.346-0.5969-0.979-1-1.719-1h-8z"
+            fill="#2980b9" />
+        <path
+            d="m12 5c0 1.1-0.895 2-2 2h-5-3c-1.1046 0-2 0.9-2 2v8 3c0 1.1 0.89543 2 2 2h20c1.105 0 2-0.9 2-2v-3-10c0-1.1-0.895-2-2-2h-10z"
+            fill="#3498db" />
+    </svg>
+    <ng-template #fileIcon>
+        <div class="relative" style="width: 80px; height: 80px;">
+            <div class="flex items-center justify-center rounded icon absolute top-2 left-0 border border-blue-300 w-full h-[90%]"><h2 class="font-bold text-3xl text-blue-300">{{item.name.split(".")[1].toUpperCase()}}</h2></div>
+        </div>
+    </ng-template>
+    <p class="text-center">{{item.name}}</p>
+</div>

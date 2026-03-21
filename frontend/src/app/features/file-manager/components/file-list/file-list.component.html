@@ -1,0 +1,13 @@
+<div class="items-list h-full px-6 pt-4">
+        <div class="current-path flex gap-1 mb-4">
+                <a *ngFor="let path of splittedCurrentPath; let last = last" routerLink="/file-manager" [queryParams]="{path: path.absolutePath}">
+                    <h2 [ngClass]="{'cursor-default text-vs-white': last}" class="text-2xl font-bold inline-block text-vs-blue-1" >{{path.displayPath}}</h2>
+                    <span class="text-2xl font-bold text-vs-white-1"> / </span>
+                </a>
+        </div>
+        <div class="items flex gap-2">
+            <div class="file" *ngFor="let item of itemsTree; let i=index">
+                <app-item [item]="item"></app-item>
+            </div>
+        </div>
+</div>

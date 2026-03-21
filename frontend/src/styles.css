@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+@layer base {
+  .noto-sans {
+    font-family: "Noto Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  }
+}
+@theme {
+  --color-vs-black : #181818;
+  --color-vs-black-1 : #1f1f1f;
+  --color-vs-black-2 : #ffffff0d;
+
+  --color-vs-blue : #0078d4;
+  --color-vs-blue-1 : #0078d4;
+
+  --color-vs-white: #ffffff;
+  --color-vs-white-1: #9d9d9d;
+  
+}

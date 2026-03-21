@@ -1,0 +1,25 @@
+<nav class="bg-vs-black border-b border-vs-black-2 relative flex flex-wrap justify-center items-center px-2 py-2">
+  <!-- Hero and Navigations -->
+  <div class="quick-back-actions text-vs-white flex-1 flex gap-3">
+      <div class="flex gap-1 [&>button]:cursor-pointer">
+        <button class="bg-vs-black-2 rounded py-0.5 px-2" (click)="goBack()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg></button>
+        <button class="bg-vs-black-2 rounded py-0.5 px-2" (click)="goForward()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></button>
+      </div>
+  </div>
+
+  <!-- Global Search -->
+  <div [ngClass]="{'flex-2': isSearchActive}" class="bg-vs-black-2 transition-all flex-1 border cursor-pointer border-vs-black-2 relative" (click)="toggleSearchActivation()">
+    <!-- handle focus events -->
+    <textarea class="global-search cursor-pointer rounded bg-vs-black-2 border text-center  p-[5px] py-0.5 outline-none text-vs-white-1 resize-none" rows="1" cols="10" placeholder="Global Search"></textarea>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions flex-1 justify-end flex items-center">
+    <button class="cursor-pointer">
+        <svg *ngIf="viewType==ItemsViewType.GRID; else listView" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M120-520v-320h320v320H120Zm0 400v-320h320v320H120Zm400-400v-320h320v320H520Zm0 400v-320h320v320H520ZM200-600h160v-160H200v160Zm400 0h160v-160H600v160Zm0 400h160v-160H600v160Zm-400 0h160v-160H200v160Zm400-400Zm0 240Zm-240 0Zm0-240Z"/></svg>
+        <ng-template #listView>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M360-200v-80h480v80H360Zm0-240v-80h480v80H360Zm0-240v-80h480v80H360ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z"/></svg>
+        </ng-template>
+    </button>
+  </div>
+</nav>
