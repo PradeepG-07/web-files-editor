@@ -17,6 +17,7 @@ class DirectoryManager {
                         isDirectory: stats.isDirectory(),
                         size: stats.size,
                         absolutePath: filePath,
+                        extension: stats.isDirectory() ? null : path.extname(filePath)
                     };
                     return result;
                 });
