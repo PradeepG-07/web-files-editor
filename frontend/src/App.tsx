@@ -1,11 +1,11 @@
 import './App.css'
-
+import Editor from "./pages/Editor"
 function App() {
 
   return (
-    <>
-      Hello
-    </>
+    <div>
+      <Editor />
+    </div>
   )
 }
 
