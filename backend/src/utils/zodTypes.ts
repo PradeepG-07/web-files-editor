@@ -42,4 +42,5 @@ export const EnvSchema = z.object({
     REDIS_URI: z.string({ message: 'REDIS_URI is required.' }),
     REDIS_PUBSUB_URI: z.string({ message: 'REDIS_URI is required.' }),
     SSE_URI: z.string({ message: 'SSE_URI is required.' }),
+    FRONTEND_URI: z.url({ message: 'FRONTEND_URI is required.' }),
 });

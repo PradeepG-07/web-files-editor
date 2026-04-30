@@ -3,5 +3,6 @@ export type Directory = {
     isDirectory: boolean;
     absolutePath: string;
     size: number;
+    extension: string|null
 };
 export type DirectoryTree = Directory[];
